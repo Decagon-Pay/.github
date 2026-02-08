@@ -1,43 +1,47 @@
+<p align="center">
+  <img src="../dec_hero.png" alt="Decagon" width="100%" />
+</p>
 
+<h3 align="center">Stripe-like checkout for Plasma via HTTP 402</h3>
 
+<p align="center">
+  <a href="https://decagon-core-web.vercel.app">Live Demo</a> · 
+  <a href="https://github.com/Decagon-Pay/Decagon-core">Source Code</a> · 
+  <a href="https://decagon-core-web.vercel.app/sdk-docs">SDK Docs</a> · 
+  <a href="https://github.com/Decagon-Pay/Decagon-core/blob/main/EFFECTS.md">Architecture</a>
+</p>
 
-USE ../DEC_HERO.PNG file in curr repo on git!
+---
 
+## What is Decagon?
 
+Decagon turns any HTTP endpoint into a paid resource using the **402 Payment Required** status code. Client requests a resource, server returns a payment challenge, client pays on Plasma, submits proof, and gets access. Standard HTTP, works with browsers, CLIs, and AI agents.
 
-GO TO REPO: https://github.com/Decagon-Pay/Decagon-core/tree/main
-Link to hosted website: https://decagon-core-web.vercel.app/
+🔗 [Source Code](https://github.com/Decagon-Pay/Decagon-core) · 🎥 [Demo Video](https://youtu.be/YpXl7jhoO6c)
 
+## 💎 Plasma Payments Bounty
 
+**What we built:**
 
-Bounties:
+- **HTTP 402 Protocol** / Any resource can return `402 Payment Required` with a payment challenge. The client pays on-chain on Plasma, submits the transaction hash, and gets instant access. No custom integration needed.
 
-MAIN DEFI + PLASMA:
-💎 Plasma Payments Bounty — Decagon
-Decagon brings Stripe-like checkout to Plasma via HTTP 402.
+- **Drop-in SDK** / One `<PaymentSheet />` React component handles wallet connection, transaction signing, verification, and receipts. Add payments to any app in minutes. → [SDK Docs](https://decagon-core-web.vercel.app/sdk-docs)
 
-What we built:
+- **Two Live Demos** / Pay-per-article [news paywall](https://decagon-core-web.vercel.app/news) and [cross-border remittance](https://decagon-core-web.vercel.app/remittance), both settling instantly on Plasma testnet with sub-cent fees.
 
-HTTP 402 protocol — Any HTTP resource returns 402 Payment Required with a payment challenge. Client pays on-chain on Plasma, submits proof, gets access. Standard HTTP, works with any client (browsers, CLIs, AI agents).
-Drop-in SDK (@decagon/ui) — One <PaymentSheet /> React component handles wallet connection, tx signing, verification, and receipts. Developers add payments in minutes. SDK DOCS: https://decagon-core-web.vercel.app/sdk-docs
-Two live demos — Pay-per-article news paywall + cross-border remittance, both settling instantly on Plasma testnet with sub-cent fees. news: https://decagon-core-web.vercel.app/news and cross-border remittance https://decagon-core-web.vercel.app/remittance
-Agent-native payments — Scoped agent tokens with daily spend caps and path allowlists let AI agents pay for resources autonomously within policy bounds.
-Why it matters for adoption:
-Users never think about crypto — they click "Unlock", MetaMask signs, content appears in <2s. The 402 standard means every API, every paywall, every SaaS can accept Plasma stablecoins with zero custom integration. One protocol, infinite verticals.
+- **Agent-Native Payments** / Scoped agent tokens with daily spend caps and path allowlists let AI agents pay for resources autonomously within policy bounds.
 
+**Why it matters:** Users never think about crypto. They click "Unlock", MetaMask signs, content appears in under 2 seconds. The 402 standard means every API, every paywall, every SaaS can accept Plasma payments with zero custom integration. One protocol, infinite verticals.
 
+## 🏗 Effectful Programming Bounty
 
+**Runtime:** TypeScript + [Effect](https://effect.website)
 
-RABOT - EFFECTFUL
-🏗 Effectful Programming Core — Decagon
-Runtime: TypeScript + Effect
+Decagon's entire backend is built on Effect. Every side effect (persistence, on-chain RPC, time, ID generation, logging) is modeled as a typed capability interface and injected at the application boundary.
 
-Decagon's entire backend is built on Effect as the core architectural paradigm. Every side effect — persistence, on-chain RPC, time, ID generation, logging — is modeled as an Effect service (Context Tag), declared in typed capability interfaces, and injected at the application boundary.
+- **13 capability interfaces** define all I/O boundaries: `PaymentVerifier`, `ReceiptsStore`, `ChallengesStore`, `Clock`, `PlasmaRpc`, `PolicyStore`, and more
+- **Pure workflows** compose capabilities via `Effect.gen`: `getArticle`, `verifyPaymentAndIssueSession`, `createTransfer`, `checkPaymentPolicy`
+- **Two provider layers**: in-memory mocks for development, SQLite + RPC for production, swapped via `Effect.provide()` at the Fastify route boundary
+- **Zero scattered side effects**: business logic never touches the database, network, or clock directly
 
-How it works:
-
-13 capability interfaces (packages/core/src/capabilities/) define all I/O boundaries — PaymentVerifier, ReceiptsStore, ChallengesStore, Clock, PlasmaRpc, PolicyStore, etc.
-Pure workflows (packages/core/src/workflows/) compose these capabilities via Effect.gen — getArticle, verifyPaymentAndIssueSession, createTransfer, checkPaymentPolicy
-Two provider layers — in-memory mocks for testing, SQLite + RPC for production — wired via Effect.provide() in Fastify route handlers
-Zero scattered side effects — business logic never touches the database, network, or clock directly
-📄 Full architecture: EFFECTS.md[https://github.com/Decagon-Pay/Decagon-core/blob/main/EFFECTS.md]
+📄 [Full architecture doc](https://github.com/Decagon-Pay/Decagon-core/blob/main/EFFECTS.md)
